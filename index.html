@@ -905,6 +905,17 @@ function drawGuy(px,by,d,phase,spin,t,alpha,grounded=true,speed=1){
     const cyc=(t+1.7)%6.5;let m=cyc<1.3?Math.min(1,Math.sin(cyc/1.3*Math.PI)*1.7):0;
     if(TALKING)m=Math.max(m,.35+.65*Math.abs(Math.sin(t*11)));
     if(m>.02){
+      // sly eyes: upper lids drop with a slant, one eyebrow goes up
+      const fx0=d*.5-fw/2,fy0=-21-fh/2,k=Math.min(1,m*1.4);
+      for(const [ex,ey,inner] of [[.409,.573,1],[.758,.599,-1]]){
+        const x=fx0+ex*fw,y=fy0+ey*fh,rx=fw*.085,top=y-1.3,inY=y-.15+.35*k,outY=y-.95+.25*k;
+        const xi=x+inner*rx,xo=x-inner*rx;
+        g.fillStyle='rgb(196,128,112)';g.beginPath();g.moveTo(xo-inner*.2,top);g.lineTo(xi+inner*.2,top);g.lineTo(xi+inner*.2,top+(inY-top)*k);g.quadraticCurveTo(x,(inY+outY)/2*k+top*(1-k)-.2,xo-inner*.2,top+(outY-top)*k);g.closePath();g.fill();
+        g.strokeStyle='rgba(70,35,30,.9)';g.lineWidth=.42;g.beginPath();g.moveTo(xo,top+(outY-top)*k);g.quadraticCurveTo(x,(inY+outY)/2*k+top*(1-k)-.2,xi,top+(inY-top)*k);g.stroke();
+        g.strokeStyle='rgba(80,52,38,.85)';g.lineWidth=.55;g.beginPath();
+        const lift=inner<0?1.1*k:-.2*k;
+        g.moveTo(xo-inner*.3,y-2.3-lift*.3);g.quadraticCurveTo(x,y-3.1-lift,xi+inner*.2,y-2.2-(inner<0?lift*.2:-.3*k));g.stroke();
+      }
       const mx=d*.5-fw/2+.574*fw,my=-21-fh/2+.83*fh,rx=2.6+m*.6,ry=.35+m*1.9;
       g.save();g.beginPath();g.ellipse(mx,my+ry*.35,rx,ry,0,0,7);g.fillStyle='#4a1414';g.fill();g.clip();
       g.fillStyle='#f7f3ea';g.fillRect(mx-rx,my+ry*.35-ry,rx*2,Math.min(.9,ry*.5));
