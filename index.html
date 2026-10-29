@@ -17,8 +17,9 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/icon.svg">
+<link rel="icon" href="/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<meta name="apple-mobile-web-app-title" content="Trieste Hop">
 <title>Trieste Hop</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +39,7 @@
   --u:1px;
   color-scheme:dark;
 }
-html,body{height:100%}
+html,body{height:100%;touch-action:none;-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);margin:0;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
 #stage{position:relative;box-shadow:0 0 0 calc(var(--u)*2) #120b22,0 calc(var(--u)*10) calc(var(--u)*40) rgba(0,0,0,.5);overflow:hidden;border-radius:calc(var(--u)*6)}
@@ -53,6 +54,8 @@ canvas{display:block;width:100%;height:100%}
 .line{margin:0;font-size:calc(var(--u)*10.6);line-height:1.32}
 .line b{color:var(--sun);font-weight:800}
 .line.narr{font-style:italic;opacity:.85}
+.story{font-size:calc(var(--u)*11);line-height:1.38;max-width:calc(var(--u)*420);text-align:left;background:rgba(18,11,34,.55);border-radius:calc(var(--u)*8);padding:calc(var(--u)*7) calc(var(--u)*11)}
+.inst{text-align:left;margin:0;padding-left:calc(var(--u)*18);display:flex;flex-direction:column;gap:calc(var(--u)*4);max-width:calc(var(--u)*400);font-size:calc(var(--u)*11.5)}
 .tip{font-size:calc(var(--u)*10.6);color:var(--sun)}
 .small{font-size:calc(var(--u)*10);margin:0;letter-spacing:.04em;text-shadow:0 1px 2px #120b22,0 0 6px rgba(18,11,34,.9)}
 .row{display:flex;gap:calc(var(--u)*6);flex-wrap:wrap;justify-content:center}
@@ -120,11 +123,11 @@ const STR={
   done:'Livello completato!',next:'Avanti',menu:'Menu',retry:'Riprova',over:'Inciampato!',
   overTxt:'Le gambe hanno girato un po\' troppo. Riprova il livello.',pause:'Pausa',resume:'Riprendi',restart:'Ricomincia',
   time:'Tempo',jump:'SALTA',spin:'GIRA',bakery:'CAFFÈ',
-  intro:'Negli uffici di Chiurlo c\'era un impiegato che, a ogni conguaglio sbagliato, tirava giù tutto il calendario dei santi. Un giorno, davanti all\'ennesimo file Excel che non si apriva, la stampante si accese da sola e stampò una sola parola: «BASTA». Fu la conversione. Oggi è Sua Eccellenza il Cardinale (insiste con «Eccellenza», anche se ai cardinali spetterebbe «Eminenza»). Cammina saltellando con le mani in tasca e ha una missione: attraversare Trieste fino al caffè storico senza dire nemmeno una parolaccia.',introT:'La conversione',cont:'Avanti',story:['I piccioni di Piazza Unità se lo ricordano bene: anni di imprecazioni sotto i loro nidi. Ora vogliono vendetta.','La bora soffia sulle Rive e riporta indietro, una a una, tutte le sue vecchie parolacce. Saltale, e soprattutto non ripeterle.','Nel Canal Grande vivono le granzievole che lo videro lanciare in acqua la calcolatrice dell\'ufficio. Non hanno dimenticato.','Nei magazzini del Porto Vecchio è archiviata ogni fattura sbagliata della sua vecchia vita. Le pile di carta crollano sotto i piedi.','In cima a San Giusto suonano le campane: è l\'ora della confessione. La salita è lunga e i gradini si sbriciolano.','Barcola, notte. Il caffè storico è vicino. Ma sul bancone, accanto al nero, qualcuno ha lasciato una bolletta da verificare.'],
-  end:'Sua Eccellenza beve il nero, guarda la bolletta e sorride: «Il conguaglio è giusto». Per la prima volta in vita sua, nessuna imprecazione. Il giorno dopo da Chiurlo lo chiamano per un file che non quadra. Lui risponde soltanto: «Pace e bene. Mandatemelo in PDF».',endT:'Miracolo a Trieste!',
+  intro:'Negli uffici di Chiurlo lavorava Srancesco Faverio Freddi, addetto alla fatturazione. A ogni conguaglio sbagliato tirava giù tutto il calendario dei santi, e i colleghi mettevano le cuffie. Un giorno, davanti all\'ennesimo file Excel che non si apriva, la stampante si accese da sola e stampò una sola parola: «BASTA». Era un segno. Oggi è Sua Eccellenza il Cardinal Freddi (insiste con «Eccellenza», anche se ai cardinali spetterebbe «Eminenza»). Lo guida il suo mentore, Papa Faniele Daidiga, che gli insegna a non bestemmiare e a fatturare correttamente. Ma il suo arcinemico giurato, Monsignor Alderto Ambretto, trama nell\'ombra per farlo ricadere nel peccato... e negli errori di fatturazione.',introT:'La conversione di Srancesco',cont:'Avanti',story:['I piccioni di Piazza Unità se lo ricordano bene: anni di imprecazioni sotto i loro nidi. Ora vogliono vendetta.','La bora soffia sulle Rive e riporta indietro, una a una, tutte le sue vecchie parolacce. Saltale, e soprattutto non ripeterle.','Nel Canal Grande vivono le granzievole che lo videro lanciare in acqua la calcolatrice dell\'ufficio. Non hanno dimenticato.','Nei magazzini del Porto Vecchio è archiviata ogni fattura sbagliata della sua vecchia vita. Le pile di carta crollano sotto i piedi.','In cima a San Giusto suonano le campane: è l\'ora della confessione. La salita è lunga e i gradini si sbriciolano.','Barcola, notte. Il caffè storico è vicino. Ma sul bancone, accanto al nero, qualcuno ha lasciato una bolletta da verificare.'],
+  end:'Freddi legge la bolletta riga per riga. Respira. «Il conguaglio è giusto. L\'errore l\'ha messo lei, Monsignore.» Ambretto, smascherato, viene trasferito all\'ufficio reclami di Chiurlo. Papa Daidiga alza la tazzina: «Bravo, Srancesco. Nessuna bestemmia, fattura corretta». Il giorno dopo da Chiurlo lo chiamano per un file che non quadra. Lui risponde soltanto: «Pace e bene. Mandatemelo in PDF».',endT:'Miracolo a Trieste!',
   names:['Piazza Unità','Le Rive','Canal Grande','Porto Vecchio','San Giusto','Barcola di notte'],
   tips:['Salta i buchi e schiaccia i piccioni di Piazza Unità saltandoci sopra. Le colonne isolate vogliono salti precisi.','Arriva la bora e i gabbiani picchiano dall\'alto. Le pile di fatture crollano mezzo secondo dopo che ci sali: non fermarti sopra.','Le granzievole spinose non si schiacciano: prendile a calci mentre giri. Spuntoni anche sul soffitto: lì servono salti corti.','Prendi l\'ascensore del magazzino al momento giusto. Acqua profonda, carta che crolla e piattaforme mobili.','Sali a zigzag sopra gli spuntoni e corri sui gradini che si sbriciolano. Le molle ti sparano verso il castello.','Ultimo tratto, al buio, sotto il Faro della Vittoria: gabbiani sui burroni e salti lunghi da fare planando con GIRA.'],
-  scenes:[[["", "Piazza Unità, ore 8. Sua Eccellenza esce dalla curia con le mani in tasca."], ["Piccione capo", "Rrrú! È lui! Quello che ci urlava contro dalle finestre di Chiurlo!"], ["Sua Eccellenza", "Fratelli piccioni, sono un uomo nuovo. Pace e bene."], ["Piccione capo", "Rrrú. Attaccate."]], [["", "Sulle Rive si alza la bora. Nel vento si sentono voci familiari..."], ["Vecchia parolaccia", "Ti ricordi di noi? Siamo quelle del giorno della chiusura di bilancio!"], ["Sua Eccellenza", "Non vi conosco. Andate a soffiare a Muggia."]], [["", "Canal Grande. Dall'acqua emerge una granzievola anziana."], ["Granzievola", "Anni fa ci hai tirato in testa la calcolatrice dell'ufficio. Ce l'abbiamo ancora."], ["Sua Eccellenza", "Era una scientifica. Vi chiedo perdono."], ["Granzievola", "Perdono negato. Chele in alto!"]], [["", "Porto Vecchio. Montagne di fatture stampate e mai archiviate."], ["Fattura n. 4417", "Io sono il conguaglio che non quadrava. Mi hai fissato tre ore e poi hai detto... quella cosa."], ["Sua Eccellenza", "Quella cosa l'ha detta un altro me. Ora vado di fretta."]], [["", "Colle di San Giusto. Le campane suonano per lui."], ["Campanile", "DON. Confessione. DON. Adesso. DON."], ["Sua Eccellenza", "Arrivo! Sono un cardinale, non uno stambecco!"]], [["", "Barcola, notte. Il Faro della Vittoria illumina la strada verso il caffè."], ["Cameriere", "Eccellenza, il suo nero è pronto. C'è anche... una bolletta. L'ha lasciata un signore di Chiurlo."], ["Sua Eccellenza", "La tentazione finale. Arrivo."]]],quips:["Non ho detto niente. Non ho detto NIENTE.", "A Barcola sarò già santo. Forse.", "Calma, Eccellenza. Sono solo granchi con un rancore.", "Chi stampa ancora le fatture?!", "Ogni gradino è una penitenza.", "Non pensare al conguaglio. Non pensarci."],outros:["I piccioni si ritirano sulla statua. Uno lascia cadere qualcosa sulla mozzetta. Sua Eccellenza conta fino a dieci, e sorride.", "La bora si calma. Una sola parolaccia è rimasta impigliata a un lampione. Sua Eccellenza la benedice e la lascia lì.", "Le campane di Sant'Antonio suonano mezzogiorno. Le granzievole si rintanano, borbottando di un ricorso al TAR.", "Dall'ultima pila scivola un foglio: la sua lettera di dimissioni da Chiurlo. Firmata, timbrata, mai consegnata.", "In cattedrale si confessa per due ore. Il confessore esce pallido e chiede un caffè. Ma il caffè storico sta per chiudere...", ""],
+  scenes:[[["", "Piazza Unità, ore 8. Sua Eccellenza esce dalla curia con le mani in tasca."], ["Piccione capo", "Rrrú! È lui! Quello che ci urlava contro dalle finestre di Chiurlo!"], ["Sua Eccellenza", "Fratelli piccioni, sono un uomo nuovo. Pace e bene."], ["Piccione capo", "Rrrú. Attaccate."]], [["", "Sulle Rive si alza la bora. Nel vento si sentono voci familiari..."], ["Vecchia parolaccia", "Ti ricordi di noi? Siamo quelle del giorno della chiusura di bilancio!"], ["Sua Eccellenza", "Non vi conosco. Andate a soffiare a Muggia."]], [["", "Canal Grande. Dall'acqua emerge una granzievola anziana."], ["Granzievola", "Anni fa ci hai tirato in testa la calcolatrice dell'ufficio. Ce l'abbiamo ancora."], ["Sua Eccellenza", "Era una scientifica. Vi chiedo perdono."], ["Granzievola", "Perdono negato. Chele in alto!"]], [["", "Porto Vecchio. Montagne di fatture stampate e mai archiviate."], ["Fattura n. 4417", "Io sono il conguaglio che non quadrava. Mi hai fissato tre ore e poi hai detto... quella cosa."], ["Sua Eccellenza", "Quella cosa l'ha detta un altro me. Ora vado di fretta."]], [["", "Colle di San Giusto. Le campane suonano per lui."], ["Campanile", "DON. Confessione. DON. Adesso. DON."], ["Sua Eccellenza", "Arrivo! Sono un cardinale, non uno stambecco!"]], [["", "Barcola, notte. Il Faro della Vittoria illumina la strada verso il caffè."], ["Cameriere", "Eccellenza, il suo nero è pronto. C'è anche... una bolletta. L'ha lasciata un signore di Chiurlo."], ["Sua Eccellenza", "La tentazione finale. Arrivo."]]],quips:["Respira, salta, non imprecare.", "Chi fattura bene non impreca.", "Scusate per la calcolatrice!", "Ambretto ha spostato un decimale...", "Ogni gradino è una penitenza.", "Non pensare al conguaglio, Srancesco."],outros:["In Municipio ricevono la dichiarazione. Il funzionario la timbra e commenta: «È la prima pratica di Chiurlo che arriva senza un errore». Dietro una colonna, Ambretto stringe i pugni.", "La bora si calma. Una sola vecchia bestemmia è rimasta impigliata a un lampione del molo: Freddi la benedice e la lascia lì, come monito. Ambretto se ne va bagnato fradicio.", "Le campane di Sant'Antonio suonano mezzogiorno e le granzievole tornano in acqua, borbottando di un ricorso al TAR. Sul fondo del canale brilla qualcosa: è la vecchia calcolatrice. Freddi la ripesca. Funziona ancora.", "Nell'ultima pila Freddi trova l'archivio di Ambretto. Con la calcolatrice ripescata ricontrolla tutto: errori corretti, note di credito emesse. Papa Daidiga approva con un vocale: «Così si fattura».", "In cima al campanile Ambretto si arrende... ma solo per finta. Mentre Freddi si confessa, scivola giù per le scale verso il mare. Il Papa, ancora senza fiato: «Barcola. Il caffè. Corri».", ""],stories:["Prima missione: consegnare in Municipio la dichiarazione di conversione, firmata da Papa Daidiga in persona. Ma per mesi Monsignor Ambretto ha sparso briciole davanti alla sede di Chiurlo: ora i piccioni di Piazza Unità obbediscono a lui e hanno l'ordine di non far passare il cardinale. Una sola imprecazione e la conversione salta. Il Papa gli ha scritto sul palmo della mano: «Respira, salta, non imprecare».", "Ambretto ha scoperto che la bora porta lontano le parole. Dal Molo Audace ha liberato tutte le vecchie bestemmie di Freddi, registrate di nascosto in anni di chiusure di bilancio da Chiurlo, e ora le raffiche gliele soffiano contro una dopo l'altra. Sulle Rive ha lasciato anche pile di fatture che crollano al primo passo. Papa Daidiga lo chiama: «Srancesco, ricorda: chi fattura bene non ha bisogno di imprecare».", "Ambretto ha corrotto le granzievole del Canal Grande con un sacchetto di cozze. Sono le stesse che anni fa videro Freddi lanciare in acqua la calcolatrice dell'ufficio, dopo un conguaglio di Chiurlo che non tornava. Hanno buona memoria e chele affilate. Il Papa gli manda un messaggio: «Non provare a schiacciarle, hanno le spine. Gira e scalcia, con amore».", "Nel magazzino 26 del Porto Vecchio, Ambretto nasconde un archivio segreto: tutte le fatture sbagliate che Freddi emise ai tempi di Chiurlo, pronte per essere spedite all'Agenzia delle Entrate. Freddi deve arrivarci prima di lui. Le pile di carta crollano sotto i piedi e l'ascensore del magazzino va preso al volo. Papa Daidiga avverte: «Controlla gli importi, Srancesco. Ambretto ha spostato un decimale».", "Smascherato, Monsignor Ambretto si è barricato nel campanile di San Giusto e minaccia di suonare le campane finché Freddi non ammetterà, davanti a tutta Trieste, di aver sbagliato un'aliquota IVA nel lontano 2019. Papa Daidiga sale con lui, ma a metà salita si ferma col fiatone: «Vai avanti tu, figliolo. E non dire niente quando i gradini si sbriciolano».", "Ambretto è fuggito a Barcola e ha preso in ostaggio l'ultimo nero del caffè storico. Sul bancone, accanto alla tazzina, ha lasciato l'ultima tentazione: una bolletta di Chiurlo con un conguaglio sbagliato apposta. Se Freddi impreca, perde tutto. Papa Daidiga gli scrive l'ultimo messaggio: «Leggi riga per riga. Respira. Poi bevi il caffè»."],
   cornetti:'Chicchi di caffè'},
  en:{tag:'The hopping adventures of His Excellency.',play:'Play',levels:'Levels',sound:'Sound',on:'on',off:'off',
   keys:'← → walk · SPACE jump · X spin (hold)',go:'Go!',lvl:'Level',
@@ -186,6 +189,54 @@ function snd(f,d=.08,type='square',v=.06,slide=0,delay=0){
     o.connect(gn).connect(ac.destination);o.start(t0);o.stop(t0+d+.02);
   }catch(e){}
 }
+/* soundtrack: an original waltz in the style of a Friulian villotta (3/4, F major) */
+const MEL=[[72,1],[69,1],[72,1],[77,2],[76,1],[74,1],[72,1],[70,1],[69,3],
+  [67,1],[69,1],[70,1],[72,2],[69,1],[67,1],[65,1],[64,1],[65,3],
+  [69,1],[72,1],[77,1],[76,1.5],[74,.5],[72,1],[74,1],[70,1],[67,1],[72,3],
+  [77,1],[76,1],[74,1],[72,1],[69,1],[65,1],[67,1.5],[69,.5],[67,1],[65,3]];
+const CHORDS=[[41,[65,69,72]],[41,[65,69,72]],[46,[65,70,74]],[41,[65,69,72]],[36,[64,67,70]],[41,[65,69,72]],[36,[64,67,70]],[41,[65,69,72]],
+  [41,[65,69,72]],[36,[64,67,70]],[43,[62,67,70]],[36,[64,67,72]],[46,[65,70,74]],[41,[65,69,72]],[36,[64,67,70]],[41,[65,69,72]]];
+const BEAT=.42,LOOP=CHORDS.length*3*BEAT;
+const MUS=[];{let t=0;for(const [m,b] of MEL){MUS.push({t,k:'m',m,d:b*BEAT});t+=b*BEAT}
+  CHORDS.forEach(([r,ch],bar)=>{const t0=bar*3*BEAT;MUS.push({t:t0,k:'b',m:r,d:BEAT*.9});MUS.push({t:t0+BEAT,k:'c',ch,d:BEAT*.45});MUS.push({t:t0+2*BEAT,k:'c',ch,d:BEAT*.45})})}
+MUS.sort((a,b)=>a.t-b.t);
+let musGain=null,musStart=0,musIdx=0,musLoop=0,musTimer=null;
+const hz=m=>440*Math.pow(2,(m-69)/12);
+function musNote(e,when){
+  const o=[],g2=ac.createGain();g2.connect(musGain);
+  if(e.k==='m'){ // accordion: two detuned reeds through a soft filter, with bellows tremolo
+    const f=ac.createBiquadFilter();f.type='lowpass';f.frequency.value=2400;f.connect(g2);
+    for(const det of [-6,7]){const os=ac.createOscillator();os.type='sawtooth';os.frequency.value=hz(e.m);os.detune.value=det;os.connect(f);o.push(os)}
+    const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=5.5;lg.gain.value=.08;lfo.connect(lg).connect(g2.gain);o.push(lfo);
+    g2.gain.setValueAtTime(0,when);g2.gain.linearRampToValueAtTime(.32,when+.03);g2.gain.setValueAtTime(.32,when+e.d-.06);g2.gain.linearRampToValueAtTime(0,when+e.d);
+  }else if(e.k==='b'){
+    const os=ac.createOscillator();os.type='triangle';os.frequency.value=hz(e.m);os.connect(g2);o.push(os);
+    g2.gain.setValueAtTime(.55,when);g2.gain.exponentialRampToValueAtTime(.001,when+e.d);
+  }else{
+    const f=ac.createBiquadFilter();f.type='lowpass';f.frequency.value=1500;f.connect(g2);
+    for(const m of e.ch){const os=ac.createOscillator();os.type='square';os.frequency.value=hz(m);os.connect(f);o.push(os)}
+    g2.gain.setValueAtTime(.07,when);g2.gain.exponentialRampToValueAtTime(.001,when+e.d);
+  }
+  for(const os of o){os.start(when);os.stop(when+e.d+.05)}
+}
+function musTick(){
+  if(!ac||muted)return;
+  const ahead=ac.currentTime+.35;
+  while(true){const e=MUS[musIdx],when=musStart+musLoop*LOOP+e.t;if(when>ahead)break;
+    if(when>ac.currentTime-.05)musNote(e,when);musIdx++;if(musIdx>=MUS.length){musIdx=0;musLoop++}}
+}
+function startMusic(){
+  if(muted)return;
+  try{
+    ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    if(ac.state==='suspended')ac.resume();
+    if(!musGain){musGain=ac.createGain();musGain.gain.value=.09;musGain.connect(ac.destination);musStart=ac.currentTime+.1;musIdx=0;musLoop=0}
+    musGain.gain.setValueAtTime(.09,ac.currentTime);
+    if(!musTimer)musTimer=setInterval(musTick,90);
+  }catch(e){}
+}
+function stopMusic(){try{if(musGain)musGain.gain.setValueAtTime(0,ac.currentTime)}catch(e){}if(musTimer){clearInterval(musTimer);musTimer=null}musGain&&musGain.disconnect();musGain=null}
+addEventListener('pointerdown',startMusic);addEventListener('keydown',startMusic);
 const SFX={
   jump:()=>snd(330,.16,'square',.05,2.2),
   squeak:i=>snd(i?1180:980,.05,'sine',.035,1.5),
@@ -342,7 +393,16 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{const k=KMAP[e.code];if(k)keys[k]=false});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false});
 const coarse=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
+// iOS ignores user-scalable=no: block double-tap zoom and pinch zoom ourselves
+document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
+document.addEventListener('gesturechange',e=>e.preventDefault(),{passive:false});
+document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
+document.addEventListener('touchmove',e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
+let lastTouchEnd=0;
+document.addEventListener('touchend',e=>{const n=Date.now();if(n-lastTouchEnd<400&&!(e.target.closest&&e.target.closest('#screen button,#pauseBtn')))e.preventDefault();lastTouchEnd=n},{passive:false});
 touchPad.querySelectorAll('button').forEach(b=>{
+  b.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});
+  b.addEventListener('touchend',e=>e.preventDefault(),{passive:false});
   const k=b.dataset.k;
   const down=e=>{e.preventDefault();if(k==='jump'&&!keys.jump)keys.jumpPressed=true;keys[k]=true;b.classList.add('hold');try{b.setPointerCapture(e.pointerId)}catch(_){}}
   const up=e=>{e.preventDefault();keys[k]=false;b.classList.remove('hold')};
@@ -434,7 +494,7 @@ function updPlayer(dt){
   // leg cycle
   const sp=Math.abs(p.vx);
   if(p.spin)p.phase+=dt*32;
-  else if(p.ground&&sp>5)p.phase+=dt*(4+sp*.075);
+  else if(p.ground&&sp>5)p.phase+=dt*(3.4+sp*.06);
   else if(!p.ground)p.phase+=dt*5;
   else{const tg=Math.round(p.phase/Math.PI)*Math.PI;p.phase+=(tg-p.phase)*Math.min(1,dt*10)}
   const step=Math.floor(p.phase/Math.PI);
@@ -748,40 +808,45 @@ function drawEnemy(e,cx){
 /* Girandolo himself, seen 3/4 from the front: each leg loops OUT to the side in a circle */
 function legLoop(phi,R){ // closed loop out to the side, with a snappy kick at the far point
   const k=(1-Math.cos(phi))/2,kick=Math.pow(k,5);
-  return {x:R*1.1*k+R*.75*kick, y:-R*.85*k-R*.45*Math.sin(phi)-R*.35*kick, out:k, kick};
+  return {x:R*.95*k+R*.2*kick, y:-R*.7*k-R*.3*Math.sin(phi), out:k, kick};
 }
 function drawGuy(px,by,d,phase,spin,t,alpha,grounded=true,speed=1){
   g.save();g.globalAlpha=alpha;
   // little hop on every step: lifts off mid-step, lands as the foot comes back in
   const frac=(((phase%Math.PI)+Math.PI)%Math.PI)/Math.PI;
-  const hop=(!spin&&grounded)?Math.sin(frac*Math.PI)*6.5:0;
+  const walking=!spin&&grounded&&speed>.08;
+  const rise=walking?Math.pow(Math.sin(frac*Math.PI),1.15):0;          // 0 on landing, 1 mid-step
+  const dipN=walking?Math.pow(Math.max(0,1-frac/.34),1.6):0;              // knees give on landing
+  const dip=dipN*5.2;
+  const hop=walking?Math.max(0,rise*10-1.5):0;                          // feet leave the ground only briefly
   if(grounded&&!spin){g.fillStyle='rgba(30,18,50,.22)';g.beginPath();g.ellipse(px,by,9-hop*.6,2.2-hop*.15,0,0,7);g.fill()}
   // squash on landing, stretch at the top of the hop
-  const sq=grounded&&!spin?(frac<.15?1-(.15-frac)*.6:1+hop*.008):1;
+  const sq=walking?1-dipN*.14+rise*.07:1;
   g.translate(px,by);g.scale(2-sq,sq);g.translate(-px,-by);
   by-=hop;
-  const OUT='#2b1d3a',R=10.5;
+  const OUT='#2b1d3a',R=6.5;
   // which leg is swinging and how far out
   const legs=[0,1].map(i=>{
     const side=i?-1:1;
     let phi,swing;
     if(spin){phi=t*30+i*Math.PI;swing=true}
-    else{const a=((phase+i*Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);swing=a<Math.PI;phi=swing?a*2:0}
+    else if(walking){phi=phase*2+i*Math.PI;swing=true}
+    else{phi=0;swing=false}
     const l=swing?legLoop(phi,spin?R*1.1:R):{x:0,y:0,out:0,kick:0};
     return {i,side,phi,swing,...l};
   });
-  const sw=legs.find(l=>l.swing&&!spin);
+  const sw=spin?null:legs.reduce((a,b)=>b.swing&&(!a||b.out>a.out)?b:a,null);
   const shift=sw?-sw.side*2.2*sw.out:0;               // weight moves onto the standing leg
-  const tilt=(sw?-sw.side*.09*sw.out:0)+(spin?Math.sin(t*30)*.05:d*.06);
-  const bob=spin?Math.sin(t*40)*.7:-(sw?sw.out:0)*2;
+  const tilt=(sw?-sw.side*.05*sw.out:0)+(spin?Math.sin(t*30)*.05:d*.06);
+  const bob=spin?Math.sin(t*40)*.7:dip-rise*2;
   const hipY=by-10+bob*.5;
   // lower legs: red socks and black shoes poking out under the cassock
   for(const l of legs){
-    const hx=px+shift*.5+l.side*3,hy=by-9;
+    const hx=px+shift*.5+l.side*3,hy=by-9+dip*.8;
     const fx=hx+l.side*(1.5+l.x),fy=by-1+l.y;
     g.strokeStyle=l.side===d?'#c8102e':'#a50d26';g.lineWidth=3.2;g.lineCap='round';
-    g.beginPath();g.moveTo(hx,hy);g.quadraticCurveTo((hx+fx)/2+l.side*(1.5+l.out*3),(hy+fy)/2-l.out,fx,fy);g.stroke();
-    g.save();g.translate(fx+l.side*1.8,fy+.5);g.rotate(l.side*(.35+l.out*.5)-l.side*l.kick*.9);
+    g.beginPath();g.moveTo(hx,hy);g.quadraticCurveTo((hx+fx)/2+l.side*(.8+l.out*1.4+dipN*1.6),(hy+fy)/2-l.out*.6,fx,fy);g.stroke();
+    g.save();g.translate(fx+l.side*1.8,fy+.5);g.rotate(l.side*(.22+l.out*.25)-l.side*l.kick*.3);
     g.fillStyle='#16121c';g.beginPath();g.ellipse(l.side*1,0,4.8,2.6,0,0,7);g.fill();
     g.fillStyle='rgba(255,255,255,.35)';g.beginPath();g.ellipse(l.side*2.6,-.9,1.4,.6,0,0,7);g.fill();
     g.restore();
@@ -798,8 +863,9 @@ function drawGuy(px,by,d,phase,spin,t,alpha,grounded=true,speed=1){
   g.quadraticCurveTo(-8-bL*.6,7,-6.2,1);g.closePath();g.fill();g.stroke();
   // slight curve of the back while walking: upper body bends forward from the waist
   const lean=grounded&&!spin?Math.min(1,speed*1.4):0;
-  const nod=lean*(.6+.4*Math.sin(frac*Math.PI));
-  g.save();g.translate(0,3);g.rotate(d*.14*lean);g.translate(d*.8*lean,-3+.8*lean);
+  const arch=rise*lean;
+  const nod=lean*(.3+dipN*.3)-arch*.45;
+  g.save();g.translate(0,3);g.rotate(d*(.1*lean+.2*dipN*lean-.32*arch));g.translate(d*.6*lean,-3+.8*lean);
   // chest
   g.beginPath();g.ellipse(0,-2,7.2,7.6,0,0,7);g.fill();g.stroke();
   g.fillStyle=RED2;for(let y=-6;y<=12;y+=2.4)g.fillRect(d*.6-.6,y,1.2,1.2);
@@ -828,7 +894,7 @@ function drawGuy(px,by,d,phase,spin,t,alpha,grounded=true,speed=1){
   g.restore();
   // head: the face from the photo, as it is
   const fw=22,fh=fw*1.2443;
-  g.translate(d*1.8*nod,2.6*nod);g.rotate(d*.13*nod);
+  g.translate(d*1.2*nod,1.4*nod-arch*.8);g.rotate(d*.1*nod);
   if(FACE.complete&&FACE.naturalWidth)g.drawImage(FACE,d*.5-fw/2,-21-fh/2,fw,fh);
   else{g.fillStyle='#f1c9a5';g.beginPath();g.arc(d*.5,-21,9,0,7);g.fill()}
   g.restore();
@@ -928,12 +994,21 @@ function setState(s){
     return;
   }
   screen.style.justifyContent='';screen.style.paddingTop='';
+  if(s==='install'){
+    const steps=isIOS
+      ?`<li>Tocca il pulsante <b>Condividi</b> (il quadrato con la freccia verso l'alto) nella barra di Safari.</li><li>Scorri e scegli <b>Aggiungi alla schermata Home</b>.</li><li>Conferma con <b>Aggiungi</b>: l'icona di Trieste Hop compare sulla Home e il gioco si apre a schermo intero.</li>`
+      :`<li>Tocca il menu <b>⋮</b> in alto a destra in Chrome.</li><li>Scegli <b>Installa app</b> oppure <b>Aggiungi a schermata Home</b>.</li><li>Conferma: l'icona di Trieste Hop compare sulla Home e il gioco si apre a schermo intero.</li>`;
+    html(`<h2 class="mid">Salva Trieste Hop sulla Home</h2>
+      ${inApp?`<p class="txt" style="color:var(--sun)">Sei dentro WhatsApp: prima apri il link nel browser (${isIOS?'icona della bussola o «Apri in Safari»':'menu ⋮ → «Apri in Chrome»'}).</p>`:''}
+      <ol class="txt inst">${steps}</ol>
+      <div class="row">${installEvt?`<button class="b on" data-act="doinstall">Installa ora</button>`:''}<button class="b" data-act="skipinstall" data-primary>Gioca subito</button><button class="b alt" data-act="noinstall">Non mostrare più</button></div>`);return;
+  }
   if(s==='intro'){
-    html(`<h2 class="mid">${tr('introT')}</h2><p class="txt" style="max-width:calc(var(--u)*400);font-size:calc(var(--u)*11.5)">${tr('intro')}</p><div class="row"><button class="b" data-act="tocard" data-primary>${tr('cont')}</button></div>`);return;
+    html(`<h2 class="mid">${tr('introT')}</h2><p class="txt" style="max-width:calc(var(--u)*430);font-size:calc(var(--u)*10.6);line-height:1.36">${tr('intro')}</p><div class="row"><button class="b" data-act="tocard" data-primary>${tr('cont')}</button></div>`);return;
   }
   if(s==='card'){
     html(`<p class="small">${tr('lvl').toUpperCase()} ${lvl+1} / ${THEMES.length}</p><h2 class="big" style="font-size:calc(var(--u)*26)">${tr('names')[lvl]}</h2>
-      <div class="scene">${tr('scenes')[lvl].map(([sp,tx])=>sp?`<p class="line"><b>${sp}:</b> ${tx}</p>`:`<p class="line narr">${tx}</p>`).join('')}</div>
+      <p class="txt story">${tr('stories')[lvl]}</p>
       <p class="txt tip">${tr('tips')[lvl]}</p>
       <div class="row"><button class="b" data-act="go" data-primary>${tr('go')}</button></div>`);return;
   }
@@ -945,18 +1020,27 @@ function setState(s){
   if(s==='end'){let tot=0,all=0;for(let i=0;i<THEMES.length;i++){const b=best['l'+i];if(b)tot+=b.c}
     html(`<h2 class="big" style="font-size:calc(var(--u)*32)">${tr('endT')}</h2><p class="txt">${tr('end')}</p><p class="txt" style="color:var(--sun)">${tr('cornetti')}: <b>${tot}</b></p><div class="row"><button class="b" data-act="menu" data-primary>${tr('menu')}</button></div>`);return}
 }
+/* install-to-home-screen guide, shown on phones when the game is opened from a link */
+let installEvt=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e});
+const standalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||navigator.standalone===true}catch(e){return false}};
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const inApp=/WhatsApp|FBAN|FBAV|Instagram|Line\//i.test(navigator.userAgent);
+function afterSplash(){if(coarse&&!standalone()&&!store.get('noInstall',false))setState('install');else setState('title')}
 function togglePause(){if(state==='play')setState('pause');else if(state==='pause')setState('play')}
 pauseBtn.addEventListener('click',togglePause);
 screen.addEventListener('click',e=>{
   const b=e.target.closest('button');
-  if(state==='splash'){setState('title');return}
+  if(state==='splash'){afterSplash();return}
   if(!b)return;
   const a=b.dataset.act;snd(660,.05,'square',.03);
   if(a==='play'){startLevel(Math.min(unlocked-1,THEMES.length-1));if(unlocked>=THEMES.length&&best['l'+(THEMES.length-1)])startLevel(0);setState(lvl===0?'intro':'card')}
   else if(a==='lv'){startLevel(+b.dataset.n);setState(+b.dataset.n===0?'intro':'card')}
   else if(a==='tocard'){setState('card')}
+  else if(a==='skipinstall'){setState('title')}
+  else if(a==='noinstall'){store.set('noInstall',true);setState('title')}
+  else if(a==='doinstall'){const e=installEvt;installEvt=null;if(e){e.prompt();e.userChoice.finally(()=>setState('title'))}else setState('title')}
   else if(a==='lang'){lang=b.dataset.l;store.set('lang',lang);setState('title')}
-  else if(a==='mute'){muted=!muted;store.set('muted',muted);setState('title')}
+  else if(a==='mute'){muted=!muted;store.set('muted',muted);if(muted)stopMusic();else startMusic();setState('title')}
   else if(a==='go'){setState('play')}
   else if(a==='resume'){setState('play')}
   else if(a==='restart'){startLevel(lvl);setState('card')}
@@ -975,7 +1059,7 @@ function frame(now){
   acc+=dt;const STEP=1/120;
   while(acc>=STEP){update(STEP);acc-=STEP}
   g.clearRect(0,0,W,H);
-  if(state==='splash'){g.fillStyle='#120b22';g.fillRect(0,0,W,H);if(stateT>1.8)setState('title')}
+  if(state==='splash'){g.fillStyle='#120b22';g.fillRect(0,0,W,H);if(stateT>1.8)afterSplash()}
   else if(state==='title')drawTitle(clock);
   else if(L){drawWorld(clock);if(state==='play'||state==='pause'||state==='win')drawHUD(clock);
     if(state==='win'){speech(P.x-Math.round(cam)+7,P.y-42,SAYS[stateT<1.3?0:1]);if(stateT>2.7)setState(winNext)}}
