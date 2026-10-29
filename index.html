@@ -552,7 +552,7 @@ function updEnemy(e,dt){
   }
   if(e.y>ROWS*T+40)e.alive=false;
 }
-let winNext='done';
+let winNext='done',TALKING=false;
 const SAYS=['Bundi bundi','Ce biel cjscjel'];
 function speech(x,y,text,a=1){
   g.save();g.globalAlpha=a;g.font='800 11px "Baloo 2",system-ui,sans-serif';
@@ -899,7 +899,20 @@ function drawGuy(px,by,d,phase,spin,t,alpha,grounded=true,speed=1){
   // head: the face from the photo, as it is
   const fw=22,fh=fw*1.2443;
   g.translate(d*1.2*nod,1.4*nod);g.rotate(d*.06*nod);
-  if(FACE.complete&&FACE.naturalWidth)g.drawImage(FACE,d*.5-fw/2,-21-fh/2,fw,fh);
+  if(FACE.complete&&FACE.naturalWidth){
+    g.drawImage(FACE,d*.5-fw/2,-21-fh/2,fw,fh);
+    // open-mouth smile: every few seconds on its own, and while he is talking in a speech bubble
+    const cyc=(t+1.7)%6.5;let m=cyc<1.3?Math.min(1,Math.sin(cyc/1.3*Math.PI)*1.7):0;
+    if(TALKING)m=Math.max(m,.35+.65*Math.abs(Math.sin(t*11)));
+    if(m>.02){
+      const mx=d*.5-fw/2+.574*fw,my=-21-fh/2+.83*fh,rx=2.6+m*.6,ry=.35+m*1.9;
+      g.save();g.beginPath();g.ellipse(mx,my+ry*.35,rx,ry,0,0,7);g.fillStyle='#4a1414';g.fill();g.clip();
+      g.fillStyle='#f7f3ea';g.fillRect(mx-rx,my+ry*.35-ry,rx*2,Math.min(.9,ry*.5));
+      g.fillStyle='#d9686e';g.beginPath();g.ellipse(mx,my+ry*1.15,rx*.7,ry*.55,0,0,7);g.fill();
+      g.restore();
+      g.strokeStyle='rgba(120,50,45,.85)';g.lineWidth=.45;g.beginPath();g.ellipse(mx,my+ry*.35,rx,ry,0,0,7);g.stroke();
+    }
+  }
   else{g.fillStyle='#f1c9a5';g.beginPath();g.arc(d*.5,-21,9,0,7);g.fill()}
   g.restore();
   g.restore();
@@ -971,8 +984,8 @@ function drawTitle(t){
   g.fillStyle=L.theme.dirt;g.fillRect(0,236,W,52);g.fillStyle=L.theme.grass;g.fillRect(0,236,W,7);
   for(let x=-((t*40)%6);x<W;x+=6){g.beginPath();g.arc(x+3,243,3.2,0,Math.PI);g.fill()}
   const sp=Math.floor(t*13/Math.PI);if(sp!==drawTitle.last){drawTitle.last=sp}
-  drawGuy(436,236,-1,t*13,false,t,1);
-  speech(434,184,SAYS[Math.floor(t/1.6)%2]);
+  TALKING=(t%1.6)<1.1;drawGuy(436,236,-1,t*13,false,t,1);
+  speech(434,184,SAYS[Math.floor(t/1.6)%2]);TALKING=false;
 }
 
 /* ---------------- screens ---------------- */
@@ -1065,7 +1078,7 @@ function frame(now){
   g.clearRect(0,0,W,H);
   if(state==='splash'){g.fillStyle='#120b22';g.fillRect(0,0,W,H);if(stateT>1.8)afterSplash()}
   else if(state==='title')drawTitle(clock);
-  else if(L){drawWorld(clock);if(state==='play'||state==='pause'||state==='win')drawHUD(clock);
+  else if(L){TALKING=state==='win'||bubbles.some(b=>b.say);drawWorld(clock);TALKING=false;if(state==='play'||state==='pause'||state==='win')drawHUD(clock);
     if(state==='win'){speech(P.x-cam+7,P.y-42,SAYS[stateT<1.3?0:1]);if(stateT>2.7)setState(winNext)}}
   requestAnimationFrame(frame);
 }
