@@ -1,6 +1,6 @@
 # Trieste Hop
 
-A 2D platformer set in Trieste, by Kokoro Studio. Play it at https://triestehop.pages.dev/
+A 2D platformer set in Trieste, by Kokoro Studio.
 
-Every push to `main` publishes the site to Cloudflare Pages through `.github/workflows/deploy.yml`.
-The workflow needs two repository secrets: `CLOUDFLARE_API_TOKEN` (permission: Account → Cloudflare Pages → Edit) and `CLOUDFLARE_ACCOUNT_ID`.
+This repository is connected to a Cloudflare Worker: every push to `main` republishes the game automatically.
+`wrangler.jsonc` serves the files in the repository root as static assets; `.assetsignore` keeps repository-only files private.
