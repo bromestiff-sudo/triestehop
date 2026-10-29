@@ -1,0 +1,11 @@
+{
+  "name": "Trieste Hop",
+  "short_name": "Trieste Hop",
+  "description": "A 2D platformer set in Trieste. By Kokoro Studio.",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#21173a",
+  "theme_color": "#21173a",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
