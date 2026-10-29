@@ -494,7 +494,7 @@ function updPlayer(dt){
   // leg cycle
   const sp=Math.abs(p.vx);
   if(p.spin)p.phase+=dt*32;
-  else if(p.ground&&sp>5)p.phase+=dt*(3.4+sp*.06);
+  else if(p.ground&&sp>5)p.phase+=dt*(2.2+sp*.036);
   else if(!p.ground)p.phase+=dt*5;
   else{const tg=Math.round(p.phase/Math.PI)*Math.PI;p.phase+=(tg-p.phase)*Math.min(1,dt*10)}
   const step=Math.floor(p.phase/Math.PI);
@@ -840,8 +840,8 @@ function drawGuy(px,by,d,phase,spin,t,alpha,grounded=true,speed=1){
     return {i,side,phi,swing,...l};
   });
   const sw=spin?null:legs.reduce((a,b)=>b.swing&&(!a||b.out>a.out)?b:a,null);
-  const shift=sw?-sw.side*2.2*sw.out:0;               // weight moves onto the standing leg
-  const tilt=(sw?-sw.side*.05*sw.out:0)+(spin?Math.sin(t*30)*.05:d*.06);
+  const shift=sw?-sw.side*.8*sw.out:0;               // weight moves onto the standing leg
+  const tilt=(sw?-sw.side*.015*sw.out:0)+(spin?Math.sin(t*30)*.05:d*.06);
   const bob=spin?Math.sin(t*40)*.7:dip-rise*2;
   const hipY=by-10+bob*.5;
   // lower legs: red socks and black shoes poking out under the cassock
@@ -868,8 +868,8 @@ function drawGuy(px,by,d,phase,spin,t,alpha,grounded=true,speed=1){
   // slight curve of the back while walking: upper body bends forward from the waist
   const lean=grounded&&!spin?Math.min(1,speed*1.4):0;
   const arch=rise*lean;
-  const nod=lean*.3;
-  g.save();g.translate(0,3);g.rotate(d*(.08*lean+.07*dipN*lean-.2*arch));g.translate(d*.6*lean,-3+.8*lean);
+  const nod=lean*.15;
+  g.save();g.translate(0,3);g.rotate(d*(.06*lean+.03*dipN*lean-.08*arch));g.translate(d*.6*lean,-3+.8*lean);
   // chest
   g.beginPath();g.ellipse(0,-2,7.2,7.6,0,0,7);g.fill();g.stroke();
   g.fillStyle=RED2;for(let y=-6;y<=12;y+=2.4)g.fillRect(d*.6-.6,y,1.2,1.2);
